@@ -19,6 +19,7 @@ import ListMedicine from './pages/Admin/ListMedicine.jsx';
 import Orders from './pages/Admin/Orders.jsx';
 import EditAppointment from './pages/Doctor/EditAppointment.jsx';
 import ViewAppointment from './pages/Admin/ViewAppointment.jsx';
+import Invoice from './pages/Admin/Invoice.jsx';
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/add-medicine' element={<AddMedicine/>}/>
           <Route path='/medicine-list' element={<ListMedicine/>}/>
           <Route path='/orders' element={<Orders/>}/>
+          <Route path='/invoice' element={<Invoice/>}/>
           <Route path='/appointment/:appointmentId' element={<ViewAppointment />}/>
 
           {/* Doctor Route */}

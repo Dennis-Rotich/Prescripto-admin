@@ -40,7 +40,11 @@ const EditAppointment = () => {
 
                 <div className='flex-1 border border-stone-100 rounded-lg p-8 py-7 bg-white'>
                     <p className='text-gray-600 font-medium text-xl mt-4'>Doctor's Prescription</p>
-                    <textarea onChange={(e)=>{setPrescription(e.target.value)}} className='w-full max-w-[500px] py-6 px-2'></textarea>
+                    {
+                        appointmentData.prescription ? 
+                        <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
+                        : <textarea onChange={(e)=>{setPrescription(e.target.value)}} className='w-full max-w-[500px] py-6 px-2'></textarea>
+                    }
                     {
                         appointmentData.cancelled ? <p className='text-red-400 text-2xl font-medium'>Cancelled</p> : appointmentData.isCompleted ?
                             <p className='text-green-500 text-2xl font-medium'>Completed</p>
