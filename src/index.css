@@ -17,6 +17,14 @@ select,input,textarea{
     font-family: Outfit;
 }
 
+.footer li{
+  margin: 0.5rem 0.2rem;
+}
+
+button{
+  user-select: none;
+}
+
 @media print {
     body {
       visibility: hidden;
@@ -28,3 +36,4 @@ select,input,textarea{
       top: 0;
     }
   }
+
