@@ -6,9 +6,10 @@ import { assets } from '../../assets/assets'
 const EditAppointment = () => {
 
     const { appointmentId } = useParams()
-    const { appointments, cancelAppointment, completeAppointment, addAppointmentPrescription } = useContext(DoctorContext)
+    const { appointments, cancelAppointment, completeAppointment, addAppointmentPrescription, addAppointmentNotes } = useContext(DoctorContext)
     const [appointmentData, setAppointmentData] = useState(false)
     const [prescription, setPrescription] = useState("")
+    const [notes, setNotes] = useState("")
 
     const fetchAppointmentData = async () => {
 
@@ -39,23 +40,34 @@ const EditAppointment = () => {
                 </div>
 
                 <div className='flex-1 border border-stone-100 rounded-lg p-8 py-7 bg-white'>
+                    <p className='text-gray-600 font-medium text-xl mt-4'>Doctor's Notes</p>
+                    {
+                        appointmentData.notes ?
+                            <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.notes}</p>
+                            : <textarea onChange={(e) => { setNotes(e.target.value) }} className='w-full max-w-[500px] py-6 px-2'></textarea>
+                    }
                     <p className='text-gray-600 font-medium text-xl mt-4'>Doctor's Prescription</p>
                     {
-                        appointmentData.prescription ? 
-                        <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
-                        : <textarea onChange={(e)=>{setPrescription(e.target.value)}} className='w-full max-w-[500px] py-6 px-2'></textarea>
+                        appointmentData.prescription ?
+                            <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
+                            : <textarea onChange={(e) => { setPrescription(e.target.value) }} className='w-full max-w-[500px] py-6 px-2'></textarea>
                     }
+
                     {
                         appointmentData.cancelled ? <p className='text-red-400 text-2xl font-medium'>Cancelled</p> : appointmentData.isCompleted ?
                             <p className='text-green-500 text-2xl font-medium'>Completed</p>
                             : <div className='flex'>
                                 <img onClick={() => { cancelAppointment(appointmentData._id) }} className='w-20 cursor-pointer' src={assets.cancel_icon} alt="" />
                                 <img onClick={() => {
-                                     completeAppointment(appointmentData._id);
-                                     addAppointmentPrescription(appointmentData._id, prescription) }} className='w-20 cursor-pointer' src={assets.tick_icon} alt="" />
+                                    completeAppointment(appointmentData._id);
+                                    addAppointmentPrescription(appointmentData._id, prescription)
+                                    addAppointmentNotes(appointmentData._id, notes)
+                                }} className='w-20 cursor-pointer' src={assets.tick_icon} alt="" />
                             </div>
                     }
                 </div>
+
+
 
             </div>
         </div>

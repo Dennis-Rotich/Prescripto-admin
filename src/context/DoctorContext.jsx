@@ -75,6 +75,21 @@ const DoctorContextProvider = (props)=>{
         }
     }
 
+    const addAppointmentNotes = async(appointmentId, notes)=>{
+        try {
+
+            const {data} = await axios.post(backendUrl+'/api/doctor/add-notes',{appointmentId, notes},{headers:{dToken}})
+            if(data.success){
+                toast.success(data.message)
+            } else{
+                toast.error(data.message)
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const getDashData = async()=>{
         try {
             
@@ -115,7 +130,7 @@ const DoctorContextProvider = (props)=>{
         completeAppointment, cancelAppointment,
         dashData, setDashData, getDashData,
         profileData, setProfileData, getProfileData,
-        addAppointmentPrescription,
+        addAppointmentPrescription, addAppointmentNotes
     }
 
     return(

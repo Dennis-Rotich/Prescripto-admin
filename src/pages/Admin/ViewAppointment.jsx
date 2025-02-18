@@ -42,6 +42,8 @@ const ViewAppointment = () => {
             </div>
             
             <div className='flex-1 border border-stone-100 rounded-lg p-8 py-7 bg-white'>
+                <p className='text-gray-600 font-medium text-xl mt-4'>Doctor's Notes</p>
+                <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.notes}</p>
                 <p className='text-gray-600 font-medium text-xl mt-4'>Doctor's Prescription</p>
                 <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
                 {
