@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets.js'
-import { AdminContext } from '../context/AdminContext'
+import { AdminContext } from '../context/AdminContext.jsx'
 import { useNavigate } from 'react-router'
 import { DoctorContext } from '../context/DoctorContext.jsx'
 
 const Navbar = () => {
-
+ 
    const {aToken, setAToken} = useContext(AdminContext)
    const {dToken, setDToken} = useContext(DoctorContext)
 

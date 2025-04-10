@@ -6,10 +6,11 @@ import { assets } from '../../assets/assets'
 const EditAppointment = () => {
 
     const { appointmentId } = useParams()
-    const { appointments, cancelAppointment, completeAppointment, addAppointmentPrescription, addAppointmentNotes } = useContext(DoctorContext)
+    const { appointments, cancelAppointment, completeAppointment, addAppointmentPrescription, addAppointmentNotes, addAppointmentLab } = useContext(DoctorContext)
     const [appointmentData, setAppointmentData] = useState(false)
     const [prescription, setPrescription] = useState("")
     const [notes, setNotes] = useState("")
+    const [lab, setLab] = useState(false)
 
     const fetchAppointmentData = async () => {
 
@@ -22,10 +23,11 @@ const EditAppointment = () => {
 
     }
 
-    useEffect(() => {
+    useEffect(()=>{
         fetchAppointmentData()
-    }, [appointmentId, appointments])
-
+        setLab(appointmentData.lab)
+    },[appointmentData, appointmentId])
+ 
     return appointmentData ? (
         <div>
             <div className='flex flex-col gap-4 m-5'>
@@ -52,7 +54,10 @@ const EditAppointment = () => {
                             <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
                             : <textarea onChange={(e) => { setPrescription(e.target.value) }} className='w-full max-w-[500px] py-6 px-2'></textarea>
                     }
-
+                    <div className='flex gap-1 pt-2'>
+                        <input onChange={()=>{setLab(!lab)}} checked={lab} type="checkbox" name="" id="" />
+                        <label htmlFor="">Schedule lab</label>
+                    </div>
                     {
                         appointmentData.cancelled ? <p className='text-red-400 text-2xl font-medium'>Cancelled</p> : appointmentData.isCompleted ?
                             <p className='text-green-500 text-2xl font-medium'>Completed</p>
@@ -62,6 +67,7 @@ const EditAppointment = () => {
                                     completeAppointment(appointmentData._id);
                                     addAppointmentPrescription(appointmentData._id, prescription)
                                     addAppointmentNotes(appointmentData._id, notes)
+                                    if(lab){addAppointmentLab(appointmentData._id)}
                                 }} className='w-20 cursor-pointer' src={assets.tick_icon} alt="" />
                             </div>
                     }

@@ -3,7 +3,7 @@ import React from 'react'
 const InvoiceHeader = () => {
 
     const handlePrint = () => {
-        window.print()
+        window.print() 
     }
 
     return (
