@@ -14,6 +14,7 @@ import patients_icon from './patients_icon.svg'
 import upload_area_product from './upload_area_product.png'
 import parcel_icon from './parcel_icon.svg'
 import invoice_icon from './invoice.png'
+import trialLogo from "./trial_logo.png"
 
 export const assets = {
     add_icon,
@@ -31,5 +32,6 @@ export const assets = {
     earning_icon,
     upload_area_product,
     parcel_icon, 
-    invoice_icon
+    invoice_icon,
+    trialLogo
 }
