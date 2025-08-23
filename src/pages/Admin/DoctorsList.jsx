@@ -3,7 +3,8 @@ import { AdminContext } from '../../context/AdminContext'
 
 const DoctorsList = () => {
 
-   const {doctors, getAllDoctors, aToken, changeAvailability} = useContext(AdminContext)
+   const {doctors, getAllDoctors, aToken, changeAvailability, removeDoctor} = useContext(AdminContext)
+
    
    useEffect(() => {
       if(aToken){
@@ -18,6 +19,9 @@ const DoctorsList = () => {
       <div className='w-full flex flex-wrap gap-4 pt-5 gap-y-6'>
         {doctors.map((item,index) => {
           return (<div className='border border-indigo-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={index}>
+            <div className='flex justify-end'>
+              <button onClick={()=>{removeDoctor(item._id)}} className='bg-indigo-200 hover:bg-red-600 transition-all duration-500 p-1 rounded-lg'>X</button>
+            </div>
             <img className='bg-indigo-50 group-hover:bg-primary transition-all duration-500' src={item.image} alt="" />
             <div className='p-4'>
               <p className='text-neutral-800 text-lg font-medium'>{item.name}</p>

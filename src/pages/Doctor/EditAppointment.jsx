@@ -54,20 +54,25 @@ const EditAppointment = () => {
                             <p className='text-gray-800 font-medium text-xl my-5'>{appointmentData.prescription}</p>
                             : <textarea onChange={(e) => { setPrescription(e.target.value) }} className='w-full max-w-[500px] py-6 px-2'></textarea>
                     }
-                    <div className='flex gap-1 pt-2'>
-                        <input onChange={()=>{setLab(!lab)}} checked={lab} type="checkbox" name="" id="" />
-                        <label htmlFor="">Schedule lab</label>
-                    </div>
                     {
-                        appointmentData.cancelled ? <p className='text-red-400 text-2xl font-medium'>Cancelled</p> : appointmentData.isCompleted ?
+                        appointmentData.lab ? 
+                        <p className='text-red-800 font-medium text-xl my-5'>Lab has been scheduled</p>
+                        : <button onClick={()=>{
+                            addAppointmentLab(appointmentData._id)
+                            fetchAppointmentData()
+                        }} className='flex items-center gap-2 bg-blue-600 px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 hover:text-gray-700 hover:bg-white hover:border-blue-600 hover:border-b-4 hover:border-t-4 transition-all duration-300' href="#speciality">
+                        Schedule lab 
+                    </button>
+                    }
+                    {
+                        appointmentData.cancelled || !appointmentData.isLabComplete ? <p className='text-gray-400 text-2xl font-medium'>Cancelled or awaiting lab results</p> : appointmentData.isCompleted ?
                             <p className='text-green-500 text-2xl font-medium'>Completed</p>
-                            : <div className='flex'>
+                            : <div className='flex my-5'>
                                 <img onClick={() => { cancelAppointment(appointmentData._id) }} className='w-20 cursor-pointer' src={assets.cancel_icon} alt="" />
                                 <img onClick={() => {
                                     completeAppointment(appointmentData._id);
                                     addAppointmentPrescription(appointmentData._id, prescription)
                                     addAppointmentNotes(appointmentData._id, notes)
-                                    if(lab){addAppointmentLab(appointmentData._id)}
                                 }} className='w-20 cursor-pointer' src={assets.tick_icon} alt="" />
                             </div>
                     }
