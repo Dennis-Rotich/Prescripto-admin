@@ -11,6 +11,7 @@ const login = () => {
     const [state,setState] = useState('Admin')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false) // New state for password visibility
 
     const {setAToken,backendUrl} = useContext(AdminContext)
     const {setDToken} = useContext(DoctorContext)
@@ -61,7 +62,22 @@ const login = () => {
             </div>
             <div className='w-full'>
                 <p>Password</p>
-                <input onChange={(e)=>setPassword(e.target.value)} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="password" value={password} required />
+                <div className='relative'>
+                    <input 
+                        onChange={(e)=>setPassword(e.target.value)} 
+                        className='border border-[#DADADA] rounded w-full p-2 mt-1' 
+                        type={showPassword ? "text" : "password"} 
+                        value={password} 
+                        required 
+                    />
+                    <button 
+                        type="button" 
+                        className='absolute right-2 top-2 text-gray-500' 
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                </div>
             </div>
             <button className='bg-primary text-white w-full rounded-md text-base py-2'>Login</button>
             {

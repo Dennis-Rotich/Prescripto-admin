@@ -10,8 +10,6 @@ const DoctorProfile = () => {
   const {dToken, profileData, setProfileData, getProfileData, backendUrl} = useContext(DoctorContext)
   const {currency} = useContext(AppContext)
   const [docImg,setDocImg] = useState(false)
-  const [address1,setAddress1] = useState('')
-  const [address2,setAddress2] = useState('')
   
 
   const [isEdit, setIsEdit] = useState(false)
@@ -25,7 +23,7 @@ const DoctorProfile = () => {
         formData.append('image', docImg)
       }
       formData.append('about', profileData.about)
-      formData.append('address', JSON.stringify({line1:address1, line2:address2}))
+      formData.append('address', JSON.stringify({line1:profileData.address.line1, line2:profileData.address.line2}))
       formData.append('fee', Number(profileData.fee))
       formData.append('available', profileData.available)
       // Add docId to ensure it's available in req.body after multer processing
@@ -103,9 +101,9 @@ const DoctorProfile = () => {
           <div className='flex gap-2 py-2'>
             <p>Address:</p>
             <p className='text-sm'>
-              {isEdit? <input type="text" onChange={(e)=>{setAddress1(e.target.value)}} value={profileData.address.line1} /> :profileData.address.line1}
+              {isEdit? <input type="text" onChange={(e)=>{setProfileData(prev=>({...prev, address:{...prev.address, line1: e.target.value}}))}} value={profileData.address.line1} /> :profileData.address.line1}
             <br />
-              {isEdit? <input type="text" onChange={(e)=>{setAddress2(e.target.value)}} value={profileData.address.line2} /> :profileData.address.line2}
+              {isEdit? <input type="text" onChange={(e)=>{setProfileData(prev=>({...prev, address:{...prev.address, line2: e.target.value}}))}} value={profileData.address.line2} /> :profileData.address.line2}
             </p>
           </div>
 
