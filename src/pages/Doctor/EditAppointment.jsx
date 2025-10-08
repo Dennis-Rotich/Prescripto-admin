@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { DoctorContext } from '../../context/DoctorContext'
 import { assets } from '../../assets/assets'
 
@@ -11,6 +11,8 @@ const EditAppointment = () => {
     const [prescription, setPrescription] = useState("")
     const [notes, setNotes] = useState("")
     const [lab, setLab] = useState(false)
+
+    const navigate = useNavigate()
 
     const fetchAppointmentData = async () => {
 
@@ -60,12 +62,14 @@ const EditAppointment = () => {
                         : <button onClick={()=>{
                             addAppointmentLab(appointmentData._id)
                             fetchAppointmentData()
-                        }} className='flex items-center gap-2 bg-blue-600 px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 hover:text-gray-700 hover:bg-white hover:border-blue-600 hover:border-b-4 hover:border-t-4 transition-all duration-300' href="#speciality">
+                            navigate('/doctor-appointments')
+                            window.location.reload()
+                        }} className='bg-blue-500 text-white py-2 px-8 mt-5 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300' href="#speciality">
                         Schedule lab 
                     </button>
                     }
                     {
-                        appointmentData.cancelled || !appointmentData.isLabComplete ? <p className='text-gray-400 text-2xl font-medium'>Cancelled or awaiting lab results</p> : appointmentData.isCompleted ?
+                        appointmentData.cancelled || !appointmentData.isLabComplete ? <p className='text-blue-500 text-2xl font-medium'>Cancelled or awaiting lab results</p> : appointmentData.isCompleted ?
                             <p className='text-green-500 text-2xl font-medium'>Completed</p>
                             : <div className='flex my-5'>
                                 <img onClick={() => { cancelAppointment(appointmentData._id) }} className='w-20 cursor-pointer' src={assets.cancel_icon} alt="" />
