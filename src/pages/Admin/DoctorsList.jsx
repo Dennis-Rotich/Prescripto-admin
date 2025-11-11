@@ -1,11 +1,21 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { AdminContext } from '../../context/AdminContext'
+import { toast } from 'react-toastify'
 
 const DoctorsList = () => {
 
    const {doctors, getAllDoctors, aToken, changeAvailability, removeDoctor} = useContext(AdminContext)
 
-   
+   const confirmDelete = (id) => {
+      const userConfirmed = confirm("Are you sure you want to delete this doctor?")
+
+      if(userConfirmed){
+        removeDoctor(id)
+      } else{
+        toast.dismiss('Doctor not deleted')
+      }
+   }
+
    useEffect(() => {
       if(aToken){
         getAllDoctors()
@@ -20,7 +30,7 @@ const DoctorsList = () => {
         {doctors.map((item,index) => {
           return (<div className='border border-indigo-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={index}>
             <div className='flex justify-end'>
-              <button onClick={()=>{removeDoctor(item._id)}} className='bg-indigo-200 hover:bg-red-600 transition-all duration-500 p-1 rounded-lg'>X</button>
+              <button onClick={()=>{confirmDelete(item._id)}} className='bg-indigo-200 hover:bg-red-600 transition-all duration-500 p-1 rounded-lg'>X</button>
             </div>
             <img className='bg-indigo-50 group-hover:bg-primary transition-all duration-500' src={item.image} alt="" />
             <div className='p-4'>
