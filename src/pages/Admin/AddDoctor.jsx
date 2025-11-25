@@ -18,14 +18,41 @@ const AddDoctor = () => {
     const [degree,setDegree] = useState('')
     const [address1,setAddress1] = useState('')
     const [address2,setAddress2] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
     const {backendUrl, aToken} = useContext(AdminContext)
+
+    const EyeIcon = ({ isVisible, onClick }) => (
+      <div 
+        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600"
+        onClick={onClick}
+      >
+        {isVisible ? (
+          // Hide Icon (Eye with slash)
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+            <path fillRule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l16 16a1 1 0 001.414-1.414l-16-16zM5.121 7.29a3 3 0 014.242 4.242l-4.242-4.242a.997.997 0 00.001-.001z" clipRule="evenodd" />
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path fillRule="evenodd" d="M1.383 11.16a.75.75 0 00-.236.425C1.192 12.355 3.328 16 10 16c2.815 0 5.33-1.077 7.005-2.923a.75.75 0 00-.546-1.281 10.45 10.45 0 01-6.459 2.083c-2.31 0-4.498-.55-6.49-1.503a.75.75 0 00-.577.172z" clipRule="evenodd" />
+            <path d="M18.883 8.337a.75.75 0 00-.17-.184A10.511 10.511 0 0010 6c-2.825 0-5.358 1.078-7.14 2.946a.75.75 0 00.542 1.282A9.011 9.011 0 0110 7.5c1.889 0 3.655.483 5.226 1.341a.75.75 0 00.178.181z" />
+          </svg>
+        ) : (
+          // Show Icon (Open Eye)
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path fillRule="evenodd" d="M.758 10C3.185 5.56 6.845 3 10 3s6.815 2.56 9.242 7c-2.427 4.44-6.087 7-9.242 7S3.185 14.44.758 10zM10 15a5 5 0 100-10 5 5 0 000 10z" clipRule="evenodd" />
+          </svg>
+        )}
+      </div>
+    );
 
     const onSubmitHandler = async(event)=>{
       event.preventDefault();
       try {
-        
+        setLoading(true)
+
         if (!docImg){
+          setLoading(false)
           return toast.error('Image not selected')
         }
 
@@ -60,12 +87,15 @@ const AddDoctor = () => {
           setDegree('')
           setAbout('')
           setFee('')
+          setLoading(false)
         } else{
           toast.error(data.message)
+          setLoading(false)
         }
 
       } catch (error) {
         toast.error(error.message)
+        setLoading(false)
         console.log(error);
       }
     }
@@ -96,9 +126,27 @@ const AddDoctor = () => {
               <input onChange={(e)=>setEmail(e.target.value)} value={email} className='border rounded px-3 py-2' type="email" placeholder='Email' required/>
             </div>
 
-            <div className='flex-1 flex-col gap-1'>
-              <p>Doctor Password</p>
-              <input onChange={(e)=>setPassword(e.target.value)} value={password} className='border rounded px-3 py-2' type="password" placeholder='Password' required/>
+            <div className='flex-1 flex-col gap-1 relative'>
+                <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Doctor Password (min 6 characters)
+                </label>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'} 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength="6"
+                    className="appearance-none block w-full pr-10 px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                  <EyeIcon 
+                    isVisible={showPassword} 
+                    onClick={() => setShowPassword(!showPassword)} 
+                  />
+                </div>
+          </div>
             </div>
 
             <div className='flex-1 flex-col gap-1'>
@@ -113,7 +161,7 @@ const AddDoctor = () => {
                 <option value="7 Years">7 Years</option>
                 <option value="8 Years">8 Years</option>
                 <option value="9 Years">9 Years</option>
-                <option value="10 Years">10 Years</option>
+                <option value="10 Years Plus">10 Years Plus</option>
               </select>
             </div>
 
@@ -137,7 +185,7 @@ const AddDoctor = () => {
               </select>
             </div>
 
-            <div className='flex-1 flex-col gap-1'>
+            <div className='flex-1 flex-col gap-1 mt-1'>
               <p>Education</p>
               <input onChange={(e)=>setDegree(e.target.value)} value={degree} className='border rounded px-3 py-2' type="text" placeholder='Education' required/>
             </div>
@@ -156,7 +204,9 @@ const AddDoctor = () => {
           <textarea onChange={(e)=>setAbout(e.target.value)} value={about} className='w-full px-4 pt-2 border rounded' placeholder='write about doctor' rows={5} required/>
         </div>
 
-        <button type='sumbit' className='bg-primary px-10 py-3 text-white rounded-full'>Add Doctor</button>
+        <button type='sumbit' className='bg-primary px-10 py-3 text-white rounded-full' disabled={loading}>
+          {loading ? 'Adding...' : 'Add Doctor'}
+        </button>
 
       </div>
 
