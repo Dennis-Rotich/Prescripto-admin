@@ -18,6 +18,8 @@ import Orders from './pages/Admin/Orders.jsx';
 import EditAppointment from './pages/Doctor/EditAppointment.jsx';
 import ViewAppointment from './pages/Admin/ViewAppointment.jsx';
 import Invoice from './pages/Admin/Invoice.jsx';
+import ForgotPassword from './ForgotPassword.jsx';
+import ResetPassword from './ResetPassword.jsx';
 
 const App = () => {
 
@@ -50,7 +52,11 @@ const App = () => {
     </div>
   ) : (
     <div>
-      <Login/>
+      <Routes>
+        <Route path='/' element={<Login/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword />}/>
+        <Route path='/reset-password/:token' element={<ResetPassword />}/>
+      </Routes>
       <ToastContainer/>
     </div>
   )

@@ -85,6 +85,7 @@ const login = () => {
                 <p>Doctor Login <span className='text-primary underline cursor-pointer' onClick={()=>{setState('Doctor')}}>Click here</span></p> :
                 <p>Admin Login <span className='text-primary underline cursor-pointer' onClick={()=>{setState('Admin')}}>Click here</span></p>
             }
+            {state === 'Doctor' && <p>Forgot your password? <span onClick={()=>{navigate("/forgot-password")}} className='text-primary underline cursor-pointer'>Click here</span></p>}
         </div>
     </form>
   )

@@ -204,7 +204,7 @@ const AddDoctor = () => {
           <textarea onChange={(e)=>setAbout(e.target.value)} value={about} className='w-full px-4 pt-2 border rounded' placeholder='write about doctor' rows={5} required/>
         </div>
 
-        <button type='sumbit' className='bg-primary px-10 py-3 text-white rounded-full' disabled={loading}>
+        <button type='sumbit' className='bg-primary px-10 py-3 text-white rounded-full cursor-pointer' disabled={loading}>
         {loading ? (
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
