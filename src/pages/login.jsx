@@ -5,6 +5,7 @@ import{ AdminContext }from '../context/AdminContext.jsx'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import { DoctorContext } from '../context/DoctorContext.jsx'
+import { useNavigate } from 'react-router'
 
 const login = () => {
 
@@ -15,6 +16,8 @@ const login = () => {
 
     const {setAToken,backendUrl} = useContext(AdminContext)
     const {setDToken} = useContext(DoctorContext)
+
+    const navigate = useNavigate()
 
     console.log(setAToken, backendUrl);
 
